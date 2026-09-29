@@ -1,136 +1,119 @@
-# Titanic Survival Prediction
+# 🚢 Titanic — Survival Prediction
 
-In this project, I tackle the classic [Kaggle Titanic - Machine Learning from Disaster](https://www.kaggle.com/c/titanic) competition. The goal is to predict which passengers survived the disaster based on features like age, sex, ticket class, and family relationships.
+This was my first end-to-end Machine Learning project on Kaggle.
 
-While Titanic is often considered the "Hello World" of machine learning, my focus here was to build a rigorous, end-to-end supervised learning pipeline — from deep exploratory analysis and thoughtful feature engineering to robust cross-validation and final submission.
+The goal was to predict whether a passenger survived the Titanic disaster based on the available passenger information.
+
+**Kaggle Score: 0.77990**
 
 ---
 
-## Problem
+## 🎯 Goal
 
-This is a binary classification problem where the target variable is `Survived` (0 = No, 1 = Yes). The challenge lies in extracting meaningful signals from noisy, incomplete passenger data to accurately predict survival probabilities.
+The main goal of this project was not only to get a good score, but to go through the full Machine Learning workflow:
 
-## Dataset
+* understand the dataset;
+* perform EDA;
+* handle missing values;
+* create useful features;
+* build a baseline;
+* compare different models;
+* validate the results;
+* make a final Kaggle submission.
 
-The project relies on the official Kaggle competition data:
+---
 
-- `train.csv` — training data containing passenger features and the target variable `Survived`
-- `test.csv` — unlabeled test data used to generate the final Kaggle predictions
+## 🔍 Exploratory Data Analysis
 
-## Workflow
+I started by looking at:
 
-To ensure a structured and reproducible approach, I followed this complete machine learning pipeline:
+* missing values;
+* distributions of the main features;
+* relationships between features and the target;
+* survival rates across different passenger groups.
 
-1. Exploratory Data Analysis (EDA)
-2. Data preprocessing and missing value imputation
-3. Feature engineering
-4. Model training and baseline comparison
-5. Hyperparameter tuning
-6. Cross-validation
-7. Final model selection
-8. Kaggle submission generation
+One of the main things I noticed was that features such as **Sex, Pclass and Age** contain useful information about survival.
 
-## EDA
+I used visualizations throughout the analysis to better understand the data and check whether my assumptions made sense.
 
-Before touching any models, I dug into the data to understand the underlying distributions and relationships. Using `matplotlib` and `seaborn`, I analyzed:
+---
 
-- the overall survival distribution
-- the relationship between survival rates and key demographics like age, sex, and passenger class
-- the impact of family size on survival chances
-- feature correlations to identify potential multicollinearity
+## 🧹 Preprocessing & Feature Engineering
 
-## Preprocessing and Feature Engineering
+I experimented with:
 
-Raw data is rarely ready for modeling, so I spent a significant amount of time preparing the features. My main preprocessing steps included:
+* missing-value handling;
+* categorical feature encoding;
+* creating additional features;
+* removing or transforming features where appropriate.
 
-- handling missing values (using logical imputation strategies rather than just dropping rows)
-- creating a `FamilySize` feature to capture the total number of relatives aboard
-- creating an `IsAlone` binary flag to isolate solo travelers
-- dropping unused or highly cardinal features that could cause overfitting
-- one-hot encoding categorical variables
-- applying feature scaling specifically for distance-based and linear models like Logistic Regression
+I tried to make preprocessing decisions based on what I found during EDA rather than applying the same transformations to every column automatically.
 
-## Models
+---
 
-I didn't want to just stick to one algorithm, so I trained and compared several classification models to see which one captured the data patterns best:
+## 🤖 Models
 
-- Logistic Regression
-- Decision Tree
-- Gradient Boosting
+I compared several Machine Learning approaches and used validation to compare their performance.
 
-To ensure my evaluation was robust and not dependent on a single train-test split, I evaluated model performance using **5-fold cross-validation**. Hyperparameter tuning was performed using both `GridSearchCV` and `RandomizedSearchCV` to find the optimal configurations for each algorithm.
+The main idea was to understand how the models behaved and whether a more complex model actually improved the result.
 
-## Evaluation
+---
 
-To get a comprehensive view of model performance, I tracked multiple metrics beyond just simple accuracy:
+## 📊 Evaluation
 
-- Accuracy
-- ROC-AUC
-- Average Precision
+The Kaggle competition uses **Accuracy** as the evaluation metric.
 
-All detailed experimental results, charts, and metric comparisons are documented inside the `titanic_final.ipynb` notebook.
+Final Kaggle score:
 
-## Final Model and Result
+**0.77990**
 
-After extensive comparison and tuning, **Gradient Boosting** emerged as the strongest performer, striking the best balance between bias and variance.
+The most important result for me was not the score itself, but learning how the different stages of the pipeline affected the final model.
 
-| Metric | Result |
-|---|---|
-| Final Model | Gradient Boosting |
-| Kaggle Public Score | 0.77990 |
+---
 
-Once the model was selected, I retrained it on the full training dataset and used it to generate the final `submission.csv` file for Kaggle.
+## 🔎 What I Learned
 
-## Repository Structure
+This project gave me my first practical experience with the complete Data Science workflow.
 
-```text
-titanic-survival-prediction/
-├── README.md
-└── titanic_final.ipynb
-```
+The main things I learned were:
 
-## How to Run
+* how to approach an unfamiliar dataset;
+* why EDA should influence modelling decisions;
+* how missing values can affect a model;
+* how to compare models using validation;
+* why a working model is not necessarily a good model;
+* how important it is to keep the whole workflow reproducible.
 
-### On Kaggle
+---
 
-1. Open the notebook in Kaggle
-2. Add the Titanic competition dataset to the notebook environment
-3. Open `titanic_final.ipynb`
-4. Run all cells sequentially
-5. The notebook will automatically generate and save `submission.csv`
+## 🚧 What I Would Improve
 
-### Locally
+There are several things I would approach differently now.
 
-1. Install the required Python packages:
+After working on later projects, I would pay more attention to:
+
+* making validation more robust;
+* checking for possible leakage;
+* documenting experiments more systematically;
+* analysing model errors in more detail.
+
+This project was my starting point, so one of the main goals was simply to learn the workflow and build a foundation for the next projects.
+
+---
+
+## ▶️ How to Run
+
+Install the required dependencies:
 
 ```bash
-pip install pandas numpy matplotlib seaborn scikit-learn scipy jupyter
+pip install -r requirements.txt
 ```
 
-2. Launch Jupyter and open the notebook
-3. Run the cells from top to bottom
+Then open the notebook and run the project from the beginning.
 
-## Possible Improvements
+---
 
-While the current pipeline is solid, there is always room to iterate. Possible directions for future experimentation include:
+## 🔗 Links
 
-- implementing more advanced imputation techniques for missing values (like KNN or iterative imputation)
-- extracting richer titles and statuses from the `Name` feature using regex
-- testing advanced ensemble methods (like Stacking or Voting Classifiers)
-- combining preprocessing and modeling into a single, leak-proof Scikit-Learn `Pipeline`
-- exploring additional algorithms (like XGBoost or LightGBM) and more aggressive tuning strategies
-
-## Tech Stack
-
-- Python
-- Jupyter Notebook
-- pandas
-- NumPy
-- matplotlib
-- seaborn
-- scikit-learn
-- SciPy
-
-## Conclusion
-
-For me, this project was an excellent exercise in solidifying a complete supervised learning workflow. It reinforced the importance of understanding the data deeply before modeling, preparing features thoughtfully, comparing models rigorously via cross-validation, and validating results before preparing a final submission.
+* **Kaggle:** [Titanic](https://www.kaggle.com/competitions/titanic)
+* **My Kaggle Profile:** [kunkorun](https://www.kaggle.com/kunkorun)
